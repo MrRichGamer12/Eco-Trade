@@ -55,17 +55,6 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Align(
                   alignment: Alignment.center,
-                  // ignore: prefer_const_constructors
-                  child: Text(
-                    'Bem-vindo ao',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.center,
                   child: Text(
                     'Eco-Trade',
                     style: TextStyle(

@@ -13,9 +13,10 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math';
-
 import 'package:flutter/gestures.dart';
 import 'package:http/http.dart';
+
+
 
 void main() {
   var dio = Dio();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Bem-vindo ao Eco-Trade';
+    const appTitle = 'Eco-Trade';
 
     return MaterialApp(
       title: appTitle,
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/LoginPage': (context) => LoginPage(),
         '/RegisterPage': (context) => RegisterPage(),
-        '/HomePage': (context) => HomePage()
+        '/HomePage': (context) => HomePage(),
       },
     );
   }

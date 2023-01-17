@@ -8,7 +8,6 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:http/http.dart';
-import 'package:dio/dio.dart';
 
 // ignore: use_key_in_widget_constructors
 class RegisterPage extends StatefulWidget {
@@ -41,13 +40,33 @@ class _RegisterPageState extends State<RegisterPage> {
     ));
   }
 
-  Future<void> _submitData() async {
-    var dio = Dio();
-var formData = FormData.fromMap({
-  'nome': nome,
-  'password': password,
-});
-var response = await dio.post('http://127.0.0.1:1880/#flow/dc842c1d3d20dc77/db680cba92737ac4', data: formData);
+  void _postUser() {
+    if (globalFormKey.currentState!.validate()) {
+      globalFormKey.currentState!.save();
+      setState(() {
+        isAPIcallProcess = true;
+      });
+      var url = Uri.parse('http://127.0.0.1:1880/user/register');
+      Map<String, String> headers = {"Content-type": "application/json"};
+      var body = jsonEncode({"nome": nome, "password": password});
+     print('Sending request to url: $url');
+      post(url, headers: headers, body: body).then((response) {
+        setState(() {
+          isAPIcallProcess = false;
+        });
+        if (response.statusCode == 200) {
+          Navigator.pushNamed(
+              context, "/HomePage"); // Handle successful response
+        } else {
+          print("request bad"); // Handle error response
+        }
+      }).catchError((error) {
+        setState(() {
+          isAPIcallProcess = false;
+        });
+        // Handle exception
+      });
+    }
   }
 
   Widget _registerUI(BuildContext context) {
@@ -162,7 +181,7 @@ var response = await dio.post('http://127.0.0.1:1880/#flow/dc842c1d3d20dc77/db68
           Center(
             child: FormHelper.submitButton(
               "Registar",
-              _submitData,
+              _postUser,
               btnColor: HexColor("#0a0a0a"),
               borderColor: Colors.white,
               txtColor: Colors.white,

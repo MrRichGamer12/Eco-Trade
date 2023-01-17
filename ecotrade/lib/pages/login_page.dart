@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:html';
-import 'package:ecotrade/pages/home_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -15,6 +14,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+
 class _LoginPageState extends State<LoginPage> {
   bool isAPIcallProcess = false;
   bool hidePassword = true;
@@ -26,20 +26,44 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: HexColor("##0a0a0a"),
-      body: ProgressHUD(
-        inAsyncCall: isAPIcallProcess,
-        opacity: 0.3,
-        key: UniqueKey(),
-        child: Form(
-          key: globalFormKey,
-          child: _loginUI(context),
-        ),
-      ),
-    ));
+          backgroundColor: HexColor("##0a0a0a"),
+          body: ProgressHUD(
+            inAsyncCall: isAPIcallProcess,
+            opacity: 0.3,
+            key: UniqueKey(),
+            child: Form(
+              child: _loginUI(context),
+            ),
+          ),
+        ),);
   }
-
-
+  void _getUser() {
+    if (globalFormKey.currentState!.validate()) {
+      globalFormKey.currentState!.save();
+      setState(() {
+        isAPIcallProcess = true;
+      });
+      var url = Uri.parse('http://127.0.0.1:1880/user/auth');
+      Map<String, String> headers = {"Content-type": "application/json"};
+     print('Sending request to url: $url');
+      get(url, headers: headers).then((response) {
+        setState(() {
+          isAPIcallProcess = false;
+        });
+        if (response.statusCode == 200) {
+          Navigator.pushNamed(
+              context, "/HomePage"); // Handle successful response
+        } else {
+          print("request bad"); // Handle error response
+        }
+      }).catchError((error) {
+        setState(() {
+          isAPIcallProcess = false;
+        });
+        // Handle exception
+      });
+    }
+  }
   Widget _loginUI(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -177,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
           Center(
             child: FormHelper.submitButton(
               "Login",
-              (){},
+              _getUser,
               btnColor: HexColor("#0a0a0a"),
               borderColor: Colors.white,
               txtColor: Colors.white,
