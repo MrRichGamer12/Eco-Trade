@@ -250,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: <TextSpan>[
                     TextSpan(text: "Não tens uma conta?"),
                     TextSpan(
-                        text: "Cri uma conta",
+                        text: "Crie uma conta",
                         style: TextStyle(
                           color: Colors.green,
                           decoration: TextDecoration.underline,

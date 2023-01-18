@@ -107,7 +107,7 @@ class _ChatPageState extends State<ChatPage> {
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color.fromARGB(255, 37, 36, 36), Color.fromARGB(255, 37, 36, 36)]),
+                    colors: [Color.fromARGB(255, 84, 84, 84), Color.fromARGB(255, 84, 84, 84)]),
                     ),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -128,7 +128,7 @@ class _ChatPageState extends State<ChatPage> {
                     TextSpan(
                         text: "Inicio",
                         style: const TextStyle(
-                          color: Colors.black,
+                          color: Colors.grey,
                           decoration: TextDecoration.underline,
                         ),
                         recognizer: TapGestureRecognizer()
