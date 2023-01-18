@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:html';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:http/http.dart';
-import 'package:dio/dio.dart';
 
 // ignore: use_key_in_widget_constructors
 class LoginPage extends StatefulWidget {
