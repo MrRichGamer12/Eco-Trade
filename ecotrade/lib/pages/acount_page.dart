@@ -64,6 +64,7 @@ Widget _AcountUI(BuildContext context) {
           ),
         ),
         Container(
+          padding: EdgeInsets.only(left:MediaQuery.of(context).size.width/6 ),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 7,
           child:Center(
@@ -78,7 +79,8 @@ Widget _AcountUI(BuildContext context) {
                     end: Alignment.bottomCenter,
                     colors: [Colors.green, Colors.green,]),
                     ),
-              child:RichText(
+                    child:Center(
+                      child:RichText(
                  text: TextSpan(
                           style: const TextStyle(
                             color: Colors.grey,
@@ -97,7 +99,8 @@ Widget _AcountUI(BuildContext context) {
                                     }
                 ),] ,
               ),
-          )),],
+          )))
+              ,],
           ),
         ),),
         Padding( padding: const EdgeInsets.only(top:25),
@@ -109,7 +112,7 @@ Widget _AcountUI(BuildContext context) {
           child: Column(
             children: [
               const Align(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.center,
                 child: Text(
                   'Os Meus Anúncios',
                   style: TextStyle(
@@ -129,7 +132,7 @@ Widget _AcountUI(BuildContext context) {
                 ),
               ),
               Align(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.center,
                 child: Text(
                   'Anúncios Guardados',
                   style: TextStyle(
