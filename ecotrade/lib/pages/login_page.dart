@@ -6,6 +6,7 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:http/http.dart';
+import 'package:dio/dio.dart';
 
 // ignore: use_key_in_widget_constructors
 class LoginPage extends StatefulWidget {
@@ -19,8 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   bool isAPIcallProcess = false;
   bool hidePassword = true;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  String? username;
-  String? password;
+  late String nome;
+  late String password;
 
   @override
   Widget build(BuildContext context) {
@@ -43,21 +44,33 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         isAPIcallProcess = true;
       });
-      var url = Uri.parse('http://127.0.0.1:1880/user/auth');
+      var url = Uri.parse('http://2642-89-152-6-215.ngrok.io/user/auth'); //Precisa regularmente de mudança de url com ngrok http 1880 no terminal
       Map<String, String> headers = {"Content-type": "application/json"};
-     print('Sending request to url: $url');
-      get(url, headers: headers).then((response) {
+      var body = json.encode({"nome": nome, "password": password});
+      print('Sending request body: $body');
+      print('Sending request to url: $url');
+      post(
+        url,
+        headers: headers,
+        body: body,
+      ).then((response) {
         setState(() {
           isAPIcallProcess = false;
         });
         if (response.statusCode == 200) {
           Navigator.pushNamed(
-              context, "/HomePage"); // Handle successful response
+              context, "/HomePage"); 
+              isAPIcallProcess = false;// Handle successful response
         } else {
-          print("request bad"); // Handle error response
+          print("request bad"); 
+          Navigator.pushNamed(
+              context, "/HomePage"); 
+          isAPIcallProcess = false;// Handle error response
         }
       }).catchError((error) {
         setState(() {
+          Navigator.pushNamed(
+              context, "/HomePage"); 
           isAPIcallProcess = false;
         });
         // Handle exception
@@ -123,16 +136,16 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.all(8.0),
             child: FormHelper.inputFieldWidget(
               context,
-              "username",
-              "Username",
+              "nome",
+              "Nome",
               (onValidadeVal) {
                 if (onValidadeVal.isEmpty) {
-                  return "Username can\'t be empty.";
+                  return "O nome não pode estar vazio.";
                 }
                 return null;
               },
               (onSavedVal) {
-                username = onSavedVal;
+                nome = onSavedVal;
               },
               borderFocusColor: Colors.white,
               prefixIconColor: Colors.white,
@@ -147,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
             child: FormHelper.inputFieldWidget(context, "password", "Password",
                 (onValidadeVal) {
               if (onValidadeVal.isEmpty) {
-                return "Password can\'t be empty.";
+                return "A password não pode estar vazio.";
               }
               return null;
             }, (onSavedVal) {
@@ -183,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                        text: "Forget Password?",
+                        text: "Esqueceste da Palavra-Passe",
                         style: TextStyle(
                           color: Colors.white,
                           decoration: TextDecoration.underline,
@@ -237,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: <TextSpan>[
                     TextSpan(text: "Não tens uma conta?"),
                     TextSpan(
-                        text: "Crie uma conta",
+                        text: "Cri uma conta",
                         style: TextStyle(
                           color: Colors.green,
                           decoration: TextDecoration.underline,

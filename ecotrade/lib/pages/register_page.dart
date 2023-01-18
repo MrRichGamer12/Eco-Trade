@@ -46,22 +46,33 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         isAPIcallProcess = true;
       });
-      var url = Uri.parse('http://127.0.0.1:1880/user/register');
+      var url = Uri.parse('http://2642-89-152-6-215.ngrok.io/user/register'); //Precisa regularmente de mudança de url com ngrok http 1880 no terminal
       Map<String, String> headers = {"Content-type": "application/json"};
-      var body = jsonEncode({"nome": nome, "password": password});
-     print('Sending request to url: $url');
-      post(url, headers: headers, body: body).then((response) {
+      var body = json.encode({"nome": nome, "password": password});
+      print('Sending request body: $body');
+      print('Sending request to url: $url');
+      post(
+        url,
+        headers: headers,
+        body: body,
+      ).then((response) {
         setState(() {
           isAPIcallProcess = false;
         });
         if (response.statusCode == 200) {
           Navigator.pushNamed(
-              context, "/HomePage"); // Handle successful response
+              context, "/HomePage"); 
+              isAPIcallProcess = false;// Handle successful response
         } else {
-          print("request bad"); // Handle error response
+          print("request bad"); 
+          Navigator.pushNamed(
+              context, "/HomePage"); 
+          isAPIcallProcess = false;// Handle error response
         }
       }).catchError((error) {
         setState(() {
+          Navigator.pushNamed(
+              context, "/HomePage"); 
           isAPIcallProcess = false;
         });
         // Handle exception
@@ -181,7 +192,10 @@ class _RegisterPageState extends State<RegisterPage> {
           Center(
             child: FormHelper.submitButton(
               "Registar",
-              _postUser,
+              () {
+                
+                _postUser();
+              },
               btnColor: HexColor("#0a0a0a"),
               borderColor: Colors.white,
               txtColor: Colors.white,
