@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isAPIcallProcess = false;
   bool hidePassword = true;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  late String nome;
+  late String name;
   late String password;
 
   @override
@@ -42,9 +42,9 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         isAPIcallProcess = true;
       });
-      var url = Uri.parse('http://2642-89-152-6-215.ngrok.io/user/auth'); //Precisa regularmente de mudança de url com ngrok http 1880 no terminal
+      var url = Uri.parse('https://eco-trade.onrender.com/user/$name&$password'); //Precisa regularmente de mudança de url com ngrok http 1880 no terminal
       Map<String, String> headers = {"Content-type": "application/json"};
-      var body = json.encode({"nome": nome, "password": password});
+      var body = json.encode({"name": name, "password": password});
       print('Sending request body: $body');
       print('Sending request to url: $url');
       post(
@@ -61,14 +61,10 @@ class _LoginPageState extends State<LoginPage> {
               isAPIcallProcess = false;// Handle successful response
         } else {
           print("request bad"); 
-          Navigator.pushNamed(
-              context, "/HomePage"); 
           isAPIcallProcess = false;// Handle error response
         }
       }).catchError((error) {
-        setState(() {
-          Navigator.pushNamed(
-              context, "/HomePage"); 
+        setState(() { 
           isAPIcallProcess = false;
         });
         // Handle exception
@@ -134,8 +130,8 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.all(8.0),
             child: FormHelper.inputFieldWidget(
               context,
-              "nome",
-              "Nome",
+              "name",
+              "Name",
               (onValidadeVal) {
                 if (onValidadeVal.isEmpty) {
                   return "O nome não pode estar vazio.";
@@ -143,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                 return null;
               },
               (onSavedVal) {
-                nome = onSavedVal;
+                name = onSavedVal;
               },
               borderFocusColor: Colors.white,
               prefixIconColor: Colors.white,

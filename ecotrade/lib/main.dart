@@ -4,9 +4,7 @@ import 'package:ecotrade/pages/login_page.dart';
 import 'package:ecotrade/pages/acount_page.dart';
 import 'package:ecotrade/pages/home_page.dart';
 import 'package:ecotrade/pages/chat_page.dart';
-
-
-
+ 
 void main() {
   runApp(const MyApp());
 }

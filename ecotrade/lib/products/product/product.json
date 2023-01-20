@@ -1,0 +1,20 @@
+[
+    {
+        "id":0,
+        "name":"Frasco de vidro",
+        "image":"/products/images/product_image0.jpg",
+        "description":"Um frasco de vidro que eu quero trocar."
+    },
+    {
+        "id":1,
+        "name":"Caixa de Sapatos",
+        "image":"/products/images/product_image1.jpg",
+        "description":"Uma caixa de sapatos que não preciso."
+    },
+    {
+        "id":2,
+        "name":"Saco de Proteina",
+        "image":"/products/images/product_image2.jpg",
+        "description":"Um saco de Proteina que já acabei."
+    }
+]

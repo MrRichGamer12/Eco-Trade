@@ -17,8 +17,9 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isAPIcallProcess = false;
   bool hidePassword = true;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  String? nome;
+  String? name;
   String? password;
+  String accessToken = 'b1cebf58ce03b245a33a8a670c6aeff5c46d75349b4593b2e4bf19ec4ac6c4e3aec00d3aea86f12804a654c66f5dc3a07ca14b237430597ffb272347bfdae2f7';
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +44,9 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         isAPIcallProcess = true;
       });
-      var url = Uri.parse('http://2642-89-152-6-215.ngrok.io/user/register'); //Precisa regularmente de mudança de url com ngrok http 1880 no terminal
+      var url = Uri.parse('https://eco-trade.onrender.com/users/$name&$password'); //Precisa regularmente de mudança de url com ngrok http 1880 no terminal
       Map<String, String> headers = {"Content-type": "application/json"};
-      var body = json.encode({"nome": nome, "password": password});
+      var body = json.encode({"name": name, "password": password});
       print('Sending request body: $body');
       print('Sending request to url: $url');
       post(
@@ -57,19 +58,12 @@ class _RegisterPageState extends State<RegisterPage> {
           isAPIcallProcess = false;
         });
         if (response.statusCode == 200) {
-          Navigator.pushNamed(
-              context, "/HomePage"); 
-              isAPIcallProcess = false;// Handle successful response
+          Navigator.pushNamed(context, "/HomePage");
         } else {
-          print("request bad"); 
-          Navigator.pushNamed(
-              context, "/HomePage"); 
-          isAPIcallProcess = false;// Handle error response
+          isAPIcallProcess = false; // Handle error response
         }
       }).catchError((error) {
         setState(() {
-          Navigator.pushNamed(
-              context, "/HomePage"); 
           isAPIcallProcess = false;
         });
         // Handle exception
@@ -146,7 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 return null;
               },
               (onSavedVal) {
-                nome = onSavedVal;
+                name = onSavedVal;
               },
               borderFocusColor: Colors.white,
               prefixIconColor: Colors.white,
@@ -190,7 +184,6 @@ class _RegisterPageState extends State<RegisterPage> {
             child: FormHelper.submitButton(
               "Registar",
               () {
-                
                 _postUser();
               },
               btnColor: HexColor("#0a0a0a"),
